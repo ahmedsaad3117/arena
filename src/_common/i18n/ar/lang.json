@@ -1,0 +1,10 @@
+{
+    "here": "iiiهنا",
+    "greet": "تحياتي",
+    "click": "اضغط هنا",
+    "greet_hello": "مرحبا",
+    "dummyMustBeANumber":"مدخل الدمي يجب ان يكون رقم",
+    "email_is_required":"حقل الإيميل مطلوب",
+    "email_must_be_string":"حقل الإيميل يجب ان يكون نص"
+
+  }

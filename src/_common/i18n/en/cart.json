@@ -1,0 +1,18 @@
+{
+  "--------------------": "---------------------------------",
+  "coupon_apply_success": "Coupon applied successfully",
+  "variants_assigned": "Variants assigned to Cart Item successfully",
+  "cart_return": "The cart has been returned successfully",
+  "-------------------- FAIL": "---------------------------------",
+  "cart_variant_error": "Product variant value not found",
+  "cart_already_exist": "Cart between this customer and store is already exist",
+  "variants_assigned_error": "Can't bulk assign Variants to CartItem",
+  "cart_item_shouldnot_be_less": "Sale price can't be less than",
+  "cart_item_shouldnot_be_more": "Sale price can't be more than",
+
+  "cart_should_be_positive": "Sale price can't be more than",
+  "cart_should_be_non-negative": "Sale price can't be more than",
+  "cart_should_be_less_than_product": "Sale price can't be more than",
+
+  "cart_already_empty": "Cart is already empty"
+}

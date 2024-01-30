@@ -1,0 +1,15 @@
+{
+    "------------------------ Start User success":"-----------------------------------------------",
+    "user_created": "User created successfully",
+    "user_find": "Successfully retrieved all Customers",
+    "customer_find": "Successfully retrieved all Customers",
+    "user_updated": "User updated successfully",
+    "user_findOne": "User retrieved successfully",
+    "user_deleted": "User deleted successfully",
+    "------------------------ End User success":"-----------------------------------------------",
+    "------------------------ Start User failure":"-----------------------------------------------",
+    "user_not_found": "User not found",
+    "user_cannot_be_saved": "User can't be saved",
+    "------------------------ End User failure":"-----------------------------------------------"
+
+}

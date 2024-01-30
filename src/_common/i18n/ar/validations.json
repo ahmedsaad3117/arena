@@ -1,0 +1,19 @@
+{
+  "ERROR_MSG": "لديك عدد ({count}) أخطاء",
+  "NOT_EMPTY": "لايمكن ان يكون فارغا",
+  "SHOULD_BE_STRING": "يجب ان يكون نصا",
+  "IS_OPTIONAL": "حقل اختياري",
+  "INVALID_NUMBER": "قيمة رقمية غير صحيحة",
+  "INVALID_PHONE": "رقم الهاتف غير صحيح",
+  "INVALID_STRING": "يجب ان تكون قيمة نصية",
+  "INVALID_DECIMAL": "يجب ان تكون قيمة عشرية",
+  "INVALID_EMAIL": "البريد الإلكتروني غير صالح",
+  "INVALID_BOOLEAN": "ليست قيمة منطقية",
+  "INVALID_DATE": "برجاء إدخال التاريخ بطريقة صحيحة",
+  "INVALID_ISNOTIME": "برجاء إدخال الوقت والتاريخ بطريقة صحيحة",
+  "INVALID_ISNOTARRAY": "يجب ان يكون مصفوفة",
+  "MIN": "يجب ان يحتوي علي {constraints.0} عنصر علي الاقل",
+  "MAX": "يجب ان يحتوي علي {constraints.0} عنصر علي الأكثر",
+  "DELETE_MANYTOMANY": "تم حذف ({count}) عنصر بنجاح",
+  "MIN_LENGTH": "الاسم يجب أن يكون مكون على الاقل من حرفين"
+}

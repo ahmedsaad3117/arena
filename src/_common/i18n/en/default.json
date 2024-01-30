@@ -1,0 +1,17 @@
+{
+  "--------------------": "---------------------------------",
+  "create": "Item created successfully",
+  "find": "All items retrieved successfully",
+  "update": "Item updated successfully",
+  "delete": "Item deleted successfully",
+  "findOne": "Item retrieved successfully",
+  "restore": "Item restored successfully",
+  "-------------------- FAIL": "---------------------------------",
+  "not_found": "The requested item was not found",
+  "cannot_be_saved": "The item cannot be saved",
+  "cannot_be_update": "The item cannot be update",
+  "cannot_be_remove": "The item cannot be removed",
+  "url_arabic_lan": "Arabic language not accepted as input for URL",
+
+  "general_error": "An error has occurred, please try again later"
+}

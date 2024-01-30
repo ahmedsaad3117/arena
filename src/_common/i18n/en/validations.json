@@ -1,0 +1,19 @@
+{
+  "ERROR_MSG": "Have ({count}) error(s)",
+  "NOT_EMPTY": "cannot be empty",
+  "SHOULD_BE_STRING": "{property} Should be string",
+  "IS_OPTIONAL": "is optional",
+  "INVALID_NUMBER": "is invalid number",
+  "INVALID_PHONE": "is invalid phone number",
+  "INVALID_STRING": "must be a string",
+  "INVALID_DECIMAL": "must be a decimal",
+  "INVALID_EMAIL": "{property} email is invalid",
+  "INVALID_BOOLEAN": "{property} is not a boolean",
+  "INVALID_DATE": "is invalid date",
+  "INVALID_ISNOTIME": "start_date must be a valid ISO 8601 date string",
+  "INVALID_ISNOTARRAY": "{property} must be an array",
+  "MIN": "It must contain at least {constraints.0} element",
+  "MAX": "{property} with value: \"{value}\" needs to be less than {constraints.0}, ow and {message}",
+  "DELETE_MANYTOMANY": "({count}) element(s) has been deleted successfully",
+  "MIN_LENGTH": "name must have at least 2 characters"
+}

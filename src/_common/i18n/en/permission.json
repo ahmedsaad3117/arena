@@ -1,0 +1,7 @@
+{
+  "permission_not_in_role": "Role doesn't have this permission",
+  "role_already_has_this_permission": "Role doesn't have this permission",
+  "user_already_has_this_role": "This user already owns this role",
+
+  "sucessssss": "------------------------------ scuess"
+}

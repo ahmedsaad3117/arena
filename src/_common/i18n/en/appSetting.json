@@ -1,0 +1,13 @@
+{
+  "error_on_create": "There is an error while creating the AppSetting entity",
+  "error_on_update": "There is an error while updating the AppSetting entity",
+  "not_found_appSetting": "This app setting not found",
+  "update_before_get": "Update tax settings first",
+  "create_settings_first": "Please create app settings first",
+
+  "sucessssss": "------------------------------ scuess",
+  "create_success": "App Setting created successfully",
+  "update_success": "App Setting created successfully",
+  "findAll_success": "Successfully retrieved app settings",
+  "findOne_success": "Successfully retrieved app settings"
+}

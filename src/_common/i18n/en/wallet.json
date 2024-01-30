@@ -1,0 +1,11 @@
+{
+  "--------------------": "---------------------------------",
+  "-------------------- FAIL": "---------------------------------",
+  "fail_update_wallet": "Failure in the updating wallet and creating the transaction",
+  "balance_less_than_wallet": "Wallet balance is less than the requested amount",
+  "wallet_decision_made_it": "You have already made a decision on this request",
+
+  "InstaPay_number_missing": "You should provid InstaPay number",
+  "vodafone_number_missing": "You should provid vodafone number",
+  "paypal_email_missing": "You should provid paypal email "
+}

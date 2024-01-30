@@ -1,0 +1,8 @@
+{
+  "--------------------": "---------------------------------",
+  "order_placed": "Order placed successfully",
+  "-------------------- FAIL": "---------------------------------",
+  "order_change_status_fail": "The status of a delivered order cannot be changed",
+  "order_return_end": "The product return period has expired",
+  "order_decision_made_it": "You have already made a decision on this request."
+}
