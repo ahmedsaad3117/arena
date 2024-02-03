@@ -1,7 +1,7 @@
 export class UserRequest {
   private static isAdmin: boolean = false;
   private static isCustomer: boolean = false;
-  private static lang: string = "ar";
+  private static lang: string = 'ar';
   static setLang(langRequest: string) {
     UserRequest.lang = langRequest;
   }
