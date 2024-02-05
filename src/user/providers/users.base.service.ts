@@ -23,7 +23,6 @@ import {
   updateSuccessAutoTranslated,
 } from 'src/_common/utils/successResponseMessage.util';
 import { FilterUserDto } from '../dto/filter-user.dto';
-import { BulkAssignRole } from 'src/roles/dto/bulk-assign.dto';
 import { RolesService } from 'src/roles/providers/roles.service';
 import { UpdatePasswordDto } from '../dto/update-password.dto';
 import { UserStatusEnum } from 'src/_common/enums/user_status.enum';
@@ -34,6 +33,7 @@ import { PageOptionsDto } from 'src/_common/pagination/pageOption.dto';
 import { PageDto } from 'src/_common/pagination/page.dto';
 import { PageMetaDto } from 'src/_common/pagination/page-meta.dto';
 import { explodeCompleteUrl } from 'src/_common/utils/explodeCompleteUrl.util';
+import { BulkAssignRole } from 'src/roles/dto/bulk-assign.dto';
 
 @Injectable()
 export class UsersBaseService {
@@ -237,35 +237,35 @@ export class UsersBaseService {
     await this.userRepository.softRemove(user);
     return deleteSuccessAutoTranslated('User deleted successfully');
   }
-  async updateUserPassword(id, updatePasswordDto: UpdatePasswordDto) {
-    const { old_password, new_password, confirm_new_password } =
-      updatePasswordDto;
-    if (new_password != confirm_new_password) {
-      const message = translateThis('auth.user_passwords_not_match');
+  // async updateUserPassword(id, updatePasswordDto: UpdatePasswordDto) {
+  //   const { old_password, new_password, confirm_new_password } =
+  //     updatePasswordDto;
+  //   if (new_password != confirm_new_password) {
+  //     const message = translateThis('auth.user_passwords_not_match');
 
-      throw new ConflictException({
-        message: message,
-      });
-    }
-    const user = await this.findOne(id);
-    const isPasswordCorrect = await user.isCorrectPassword(old_password);
-    if (!isPasswordCorrect) {
-      const message = translateThis('auth.user_old_passwords_not_match');
+  //     throw new ConflictException({
+  //       message: message,
+  //     });
+  //   }
+  //   const user = await this.findOne(id);
+  //   const isPasswordCorrect = await user.isCorrectPassword(old_password);
+  //   if (!isPasswordCorrect) {
+  //     const message = translateThis('auth.user_old_passwords_not_match');
 
-      throw new ConflictException({
-        message: message,
-      });
-    }
-    user.password = await hashPasswordUtil(new_password);
-    try {
-      await this.update(user.id, user);
-      return updateSuccessAutoTranslated();
-    } catch (error) {
-      const message = translateThis('default.general_error');
+  //     throw new ConflictException({
+  //       message: message,
+  //     });
+  //   }
+  //   user.password = await hashPasswordUtil(new_password);
+  //   try {
+  //     await this.update(user.id, user);
+  //     return updateSuccessAutoTranslated();
+  //   } catch (error) {
+  //     const message = translateThis('default.general_error');
 
-      throw new UnprocessableEntityException(error.message || message);
-    }
-  }
+  //     throw new UnprocessableEntityException(error.message || message);
+  //   }
+  // }
   async countEntities() {
     const count = await this.userRepository.count();
     return count;

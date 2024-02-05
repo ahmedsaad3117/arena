@@ -8,12 +8,11 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-} from "typeorm";
-import { CustomerEntity } from "./customer.entity";
-import { BaseEntity } from "src/_common/entities/base-entity";
-import { ExchangeRequestEntity } from "src/wallet/entities/exchange-request.entity";
+} from 'typeorm';
+import { CustomerEntity } from './customer.entity';
+import { BaseEntity } from 'src/_common/entities/base-entity';
 
-@Entity("customer_addresses")
+@Entity('customer_addresses')
 export class CustomerAddressEntity extends BaseEntity {
   @Column()
   address: string;
@@ -40,14 +39,8 @@ export class CustomerAddressEntity extends BaseEntity {
   comment: string;
 
   @ManyToOne(() => CustomerEntity, (customer) => customer.customer_address, {
-    onDelete: "CASCADE",
+    onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: "customer_id", referencedColumnName: "id" })
+  @JoinColumn({ name: 'customer_id', referencedColumnName: 'id' })
   customer: CustomerEntity;
-  @OneToMany(
-    () => ExchangeRequestEntity,
-    (exchangeRequest) => exchangeRequest.shipping_address,
-    { onDelete: "SET NULL" }
-  )
-  exchangeRequests: ExchangeRequestEntity[];
 }

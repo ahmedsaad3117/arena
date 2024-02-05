@@ -1,11 +1,17 @@
 import {
+  IsEmail,
   IsEnum,
   IsNotEmpty,
   IsNumberString,
   IsOptional,
+  IsPhoneNumber,
   IsString,
-} from "class-validator";
-import { OtpMessageDestination } from "../enum/message-sender.enum";
+  ValidateIf,
+  ValidationArguments,
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+} from 'class-validator';
+import { OtpMessageDestination } from '../enum/message-sender.enum';
 
 export class LoginOrSignupDto {
   @IsNotEmpty()

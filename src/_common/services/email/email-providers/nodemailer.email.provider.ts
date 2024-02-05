@@ -1,7 +1,7 @@
 // nodemailer.provider.ts
-import { Injectable, ServiceUnavailableException } from "@nestjs/common";
-import * as nodemailer from "nodemailer";
-import { EmailProvider } from "./email.provider.interface";
+import { Injectable, ServiceUnavailableException } from '@nestjs/common';
+import * as nodemailer from 'nodemailer';
+import { EmailProvider } from './email.provider.interface';
 
 @Injectable()
 export class NodeMailerProvider implements EmailProvider {
@@ -9,7 +9,7 @@ export class NodeMailerProvider implements EmailProvider {
 
   constructor() {
     this.transporter = nodemailer.createTransport({
-      service: "gmail", // or your preferred email service
+      service: 'gmail', // or your preferred email service
       auth: {
         user: process.env.NODEMAILER_EMAIL,
         pass: process.env.NODEMAILER_PASSWORD,
@@ -28,25 +28,25 @@ export class NodeMailerProvider implements EmailProvider {
       // html: '<h1>abdo</h1>',
       text: content,
     };
-    console.log("Sending email by nodemailer ........");
-    console.log("to : ", to);
+    console.log('Sending email by nodemailer ........');
+    console.log('to : ', to);
 
     this.transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
         throw new ServiceUnavailableException(error.message);
       } else {
-        console.log("Email sent: " + info.response);
+        console.log('Email sent: ' + info.response);
       }
     });
   }
   async sendEmailAsHtml(
     to: string,
     subject: string,
-    html: string
+    html: string,
   ): Promise<void> {
     const mailOptions = {
-      from: "myrgroupshop@gmail.com", //process.env.MAILER_EMAIL,
+      from: 'myrgroupshop@gmail.com', //process.env.MAILER_EMAIL,
       to,
       subject,
       html,
@@ -56,7 +56,7 @@ export class NodeMailerProvider implements EmailProvider {
       if (error) {
         throw new ServiceUnavailableException(error.message);
       } else {
-        console.log("Email sent: " + info.response);
+        console.log('Email sent: ' + info.response);
       }
     });
   }

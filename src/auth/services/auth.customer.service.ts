@@ -3,20 +3,19 @@ import {
   NotFoundException,
   UnauthorizedException,
   UnprocessableEntityException,
-} from "@nestjs/common";
-import { translateThis } from "src/_common/utils/translate-this";
-import { LoginOrSignupDto } from "../dto/login-or-signup.dto";
-import { CreateCustomerDto } from "src/customer/dto/create-customer.dto";
-import { UserStatusEnum } from "src/_common/enums/user_status.enum";
-import { CustomerService } from "src/customer/providers/customer.service";
-import { createSuccessTranslated } from "src/_common/utils/successResponseMessage.util";
-import { OtpMessageDestination } from "../enum/message-sender.enum";
-import { UserOtpService } from "./user-otp.service";
-import { EmailService } from "src/_common/services/email/email.service";
-import { SmsService } from "src/_common/services/sms/test-sms-service";
-import { SignupDto } from "../dto/signup.dto";
-import { WalletOthersService } from "src/_common/others-service/wallet-others.service";
-import { CurrencyOthersService } from "src/_common/others-service/currency-others.service";
+} from '@nestjs/common';
+import { translateThis } from 'src/_common/utils/translate-this';
+import { LoginOrSignupDto } from '../dto/login-or-signup.dto';
+import { CreateCustomerDto } from 'src/customer/dto/create-customer.dto';
+import { UserStatusEnum } from 'src/_common/enums/user_status.enum';
+import { CustomerService } from 'src/customer/providers/customer.service';
+import { createSuccessTranslated } from 'src/_common/utils/successResponseMessage.util';
+import { OtpMessageDestination } from '../enum/message-sender.enum';
+import { UserOtpService } from './user-otp.service';
+import { EmailService } from 'src/_common/services/email/email.service';
+import { SmsService } from 'src/_common/services/sms/test-sms-service';
+import { SignupDto } from '../dto/signup.dto';
+import { log } from 'console';
 
 @Injectable()
 export class CustomerAuthService {
@@ -25,28 +24,26 @@ export class CustomerAuthService {
     private readonly userOtpService: UserOtpService,
     private readonly emailService: EmailService,
     private readonly phoneService: SmsService,
-    private readonly walletOthersService: WalletOthersService,
-    private readonly currencyOthersService: CurrencyOthersService
   ) {} //private readonly emailService: EmailService,
   async loginOrSignup(loginOrSignupDto: LoginOrSignupDto | SignupDto) {
     let { user, otp_destination, country_code } = loginOrSignupDto;
     user = user.trim().toLocaleLowerCase();
     let createCustomerDto = new CreateCustomerDto();
     createCustomerDto.status = UserStatusEnum.ACTIVE;
-    createCustomerDto.name = loginOrSignupDto["name"];
-    createCustomerDto.email = loginOrSignupDto["email"];
+    createCustomerDto.name = loginOrSignupDto['name'];
+    createCustomerDto.email = loginOrSignupDto['email'];
     let query = {};
     try {
       if (otp_destination == OtpMessageDestination.EMAIL) {
-        query["email"] = user;
+        query['email'] = user;
         createCustomerDto.email = user;
       } else if (otp_destination == OtpMessageDestination.PHONE) {
-        query["phone"] = user;
+        query['phone'] = user;
         createCustomerDto.phone = user;
         createCustomerDto.country_code = country_code;
       }
 
-      console.log("loginOrSignup 22", query);
+      console.log('loginOrSignup 22', query);
       let customer = await this.customerService.findOneEntity({
         where: query,
       });
@@ -55,16 +52,10 @@ export class CustomerAuthService {
         let customerEntity =
           this.customerService.createEntity(createCustomerDto);
         customer = await this.customerService.saveEntityInstance(
-          customerEntity
-        );
-        const currencies =
-          await this.currencyOthersService.findAllEntitiesWithoutPagination();
-        await this.walletOthersService.createCustomerWallets(
-          customer,
-          currencies
+          customerEntity,
         );
       }
-      let otp: string = "";
+      let otp: string = '';
       if (otp_destination == OtpMessageDestination.EMAIL) {
         otp = await this.saveAndSendOtpToEmail(loginOrSignupDto);
       } else if (otp_destination == OtpMessageDestination.PHONE) {
@@ -73,8 +64,9 @@ export class CustomerAuthService {
 
       return { message: `Otp sent to your ${otp_destination}`, otp };
     } catch (error) {
+      log(error);
       console.log(error.message);
-      throw new UnprocessableEntityException("لا يمكن حفظ المستخدم");
+      throw new UnprocessableEntityException('لا يمكن حفظ المستخدم');
     }
   }
 
@@ -83,10 +75,10 @@ export class CustomerAuthService {
     let query = {};
 
     if (otp_destination == OtpMessageDestination.EMAIL) {
-      query["email"] = user;
+      query['email'] = user;
     } else if (otp_destination == OtpMessageDestination.PHONE) {
-      query["phone"] = user;
-      query["country_code"] = country_code;
+      query['phone'] = user;
+      query['country_code'] = country_code;
     }
     try {
       let customer = await this.customerService.findOneEntityOrFail({
@@ -94,18 +86,18 @@ export class CustomerAuthService {
       });
       const isValide = await this.userOtpService.verifyOtp(loginOrSignupDto);
 
-      let message = translateThis("auth.invalid_otp");
+      let message = translateThis('auth.invalid_otp');
 
       if (!isValide) throw new UnauthorizedException(message);
       const token = await customer.generateToken();
       return {
-        message: "Successfully logged in.",
+        message: 'Successfully logged in.',
         data: { customer },
         meta: { token },
       };
     } catch (error) {
       throw new UnprocessableEntityException(
-        error.message || "Can't verify your login"
+        error.message || "Can't verify your login",
       );
     }
   }
@@ -115,8 +107,8 @@ export class CustomerAuthService {
     const isExist = await this.customerService.findOneEntityOrFail({
       where: { email: user },
     });
-    let message = translateThis("auth.email_not_found");
-    console.log("isExist", isExist);
+    let message = translateThis('auth.email_not_found');
+    console.log('isExist', isExist);
 
     if (!isExist) throw new NotFoundException(message);
     try {
@@ -130,7 +122,7 @@ export class CustomerAuthService {
       await this.emailService.sendWelcomeAndOtp(user, generatedOtp);
       return generatedOtp;
     } catch (error) {
-      message = translateThis("auth.otp_not_sent");
+      message = translateThis('auth.otp_not_sent');
 
       throw new UnprocessableEntityException(error.message || message);
     }
@@ -141,8 +133,8 @@ export class CustomerAuthService {
       where: { phone: user },
     });
 
-    let message = translateThis("auth.email_not_found");
-    console.log("isExist", isExist);
+    let message = translateThis('auth.email_not_found');
+    console.log('isExist', isExist);
 
     if (!isExist) throw new NotFoundException(message);
     try {
@@ -154,11 +146,11 @@ export class CustomerAuthService {
 
       await this.phoneService.sendWelcomeAndOtp(
         `${country_code}${user}`,
-        generatedOtp
+        generatedOtp,
       );
       return generatedOtp;
     } catch (error) {
-      message = translateThis("auth.otp_not_sent");
+      message = translateThis('auth.otp_not_sent');
 
       throw new UnprocessableEntityException(error.message || message);
     }

@@ -6,10 +6,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { LoginDto } from '../dto/login.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { UsersBaseService } from 'src/user/providers/users.base.service';
-import { RolesService } from 'src/roles/providers/roles.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UserStatusEnum } from 'src/_common/enums/user_status.enum';
 
@@ -100,7 +97,7 @@ export class AdminAuthService {
       let newUser = await this.usersService.findOne(null, query);
 
       if (!newUser) {
-        let customerEntity = this.usersService.create(createUserDto);
+        // let customerEntity = this.usersService.create(createUserDto);
         newUser = await this.usersService.create(createUserDto);
       }
 

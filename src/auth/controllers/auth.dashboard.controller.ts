@@ -26,12 +26,12 @@ export class AdminAuthController {
     private usersService: UsersBaseService,
   ) {}
 
-  // @Post('login')
-  // @Public()
-  // @HttpCode(200)
-  // login(@Body() loginDto: LoginDto) {
-  //   return this.authService.login(loginDto);
-  // }
+  @Post('login')
+  @Public()
+  @HttpCode(200)
+  login(@Body() loginDto: LoginDto) {
+    return this.authService.login(loginDto);
+  }
 
   @Post('signup')
   @Public()

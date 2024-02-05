@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { LoginOrSignupDto } from './login-or-signup.dto';
 
 export class SignupDto extends LoginOrSignupDto {
@@ -12,5 +12,6 @@ export class SignupDto extends LoginOrSignupDto {
 
   @IsOptional()
   @IsString()
+  @IsEmail()
   email: string;
 }
