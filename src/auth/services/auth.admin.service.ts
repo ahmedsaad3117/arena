@@ -26,6 +26,8 @@ import { SignupDto } from '../dto/signup.dto';
 import { OtpMessageDestination } from '../enum/message-sender.enum';
 import { CreateCustomerDto } from 'src/customer/dto/create-customer.dto';
 import { CustomerAuthService } from './auth.customer.service';
+import { SignupAdminDto } from '../dto/signup.admin.dto';
+import { log } from 'console';
 
 @Injectable()
 export class AdminAuthService {
@@ -73,14 +75,17 @@ export class AdminAuthService {
     };
   }
 
-  async loginOrSignup(loginOrSignupDto: LoginOrSignupDto | SignupDto) {
-    let { user, otp_destination, country_code } = loginOrSignupDto;
+  async loginOrSignup(signupAdminDto: SignupAdminDto | SignupDto) {
+    let { user, otp_destination, country_code } = signupAdminDto;
     user = user.trim().toLocaleLowerCase();
     let createUserDto = new CreateUserDto();
     createUserDto.status = UserStatusEnum.ACTIVE;
-    createUserDto.name = loginOrSignupDto['name'];
-    createUserDto.email = loginOrSignupDto['email'];
-    createUserDto.phone = loginOrSignupDto['phone'];
+    createUserDto.name = signupAdminDto['name'];
+    createUserDto.email = signupAdminDto['email'];
+    createUserDto.phone = signupAdminDto['phone'];
+    createUserDto.password = signupAdminDto['password'];
+    createUserDto.confirm_password = signupAdminDto['confirm_password'];
+
     let query = {};
     try {
       if (otp_destination == OtpMessageDestination.EMAIL) {
@@ -95,6 +100,7 @@ export class AdminAuthService {
       console.log('loginOrSignup 22', query);
 
       let newUser = await this.usersService.findOne(null, query);
+      log(newUser, 'newUse1111r');
 
       if (!newUser) {
         // let customerEntity = this.usersService.create(createUserDto);
@@ -104,11 +110,11 @@ export class AdminAuthService {
       let otp: string = '';
       if (otp_destination == OtpMessageDestination.EMAIL) {
         otp = await this.customerAuthService.saveAndSendOtpToEmail(
-          loginOrSignupDto,
+          signupAdminDto,
         );
       } else if (otp_destination == OtpMessageDestination.PHONE) {
         otp = await this.customerAuthService.saveAndSendOtpToPhone(
-          loginOrSignupDto,
+          signupAdminDto,
         );
       }
 

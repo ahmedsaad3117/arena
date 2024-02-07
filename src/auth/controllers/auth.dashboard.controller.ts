@@ -17,6 +17,7 @@ import { UsersBaseService } from 'src/user/providers/users.base.service';
 import { UserDecorator } from 'src/_common/decorators/getLoggedInUser.decorator';
 import { LoginOrSignupDto } from '../dto/login-or-signup.dto';
 import { SignupDto } from '../dto/signup.dto';
+import { SignupAdminDto } from '../dto/signup.admin.dto';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('admin')
@@ -35,8 +36,8 @@ export class AdminAuthController {
 
   @Post('signup')
   @Public()
-  signup(@Body() signupDto: SignupDto) {
-    return this.authService.loginOrSignup(signupDto);
+  signup(@Body() signupAdminDto: SignupAdminDto) {
+    return this.authService.loginOrSignup(signupAdminDto);
   }
 
   @Get('/who-am-i')
