@@ -1,5 +1,6 @@
 import { DayOff } from '@app/day-off/entities/day-off.entity';
-import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Reservation } from '@app/reservation/entities/reservation.entity';
+import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export class Playground {
   @PrimaryGeneratedColumn()
@@ -26,6 +27,9 @@ export class Playground {
   @Column()
   image: string;
 
-  @ManyToOne(() => DayOff, (dayOff) => dayOff.playground)
+  @OneToMany(() => DayOff, (dayOff) => dayOff.playground)
   dayOffs: DayOff[];
+
+  @OneToMany(() => Reservation, (reservation) => reservation.playground)
+  reservations: Reservation[];
 }
