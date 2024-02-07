@@ -3,20 +3,20 @@ import {
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
-} from "@nestjs/common";
-import { CreateRoleDto } from "../dto/create-role.dto";
-import { UpdateRoleDto } from "../dto/update-role.dto";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Role } from "../entities/role.entity";
-import { Equal, EqualOperator, In, Repository } from "typeorm";
-import { generateSlugHelper } from "src/_common/utils/genSlug";
-import { Public } from "src/_common/decorators/public.decorator";
-import { AssignRoleToUser } from "../dto/assign-role.dto";
-import { UserToRole } from "src/_manyToMany/userToRole.entity";
-import { DisassociateRoleFromUser } from "../dto/disassociate-role.dto";
-import { PageOptionsDto } from "src/_common/pagination/pageOption.dto";
-import { PageMetaDto } from "src/_common/pagination/page-meta.dto";
-import { PageDto } from "src/_common/pagination/page.dto";
+} from '@nestjs/common';
+import { CreateRoleDto } from '../dto/create-role.dto';
+import { UpdateRoleDto } from '../dto/update-role.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Role } from '../entities/role.entity';
+import { Equal, EqualOperator, In, Repository } from 'typeorm';
+import { generateSlugHelper } from 'src/_common/utils/genSlug';
+import { Public } from 'src/_common/decorators/public.decorator';
+import { AssignRoleToUser } from '../dto/assign-role.dto';
+import { UserToRole } from 'src/_manyToMany/userToRole.entity';
+import { DisassociateRoleFromUser } from '../dto/disassociate-role.dto';
+import { PageOptionsDto } from 'src/_common/pagination/pageOption.dto';
+import { PageMetaDto } from 'src/_common/pagination/page-meta.dto';
+import { PageDto } from 'src/_common/pagination/page.dto';
 import {
   createSuccessAutoTranslated,
   defaultErrorAutoTranslatedString,
@@ -29,12 +29,13 @@ import {
   updateErrorAutoTranslatedString,
   updateSuccess,
   updateSuccessAutoTranslated,
-} from "src/_common/utils/successResponseMessage.util";
-import { PermissionsService } from "src/permissions/providers/permissions.service";
-import { BulkAssignPermission } from "src/permissions/dto/bulk-assign.dto";
-import { BulkAssignRole } from "../dto/bulk-assign.dto";
-import { UsersOthersUsersService } from "./role.other.users.service";
-import { translateThis } from "src/_common/utils/translate-this";
+} from 'src/_common/utils/successResponseMessage.util';
+import { PermissionsService } from 'src/permissions/providers/permissions.service';
+import { BulkAssignPermission } from 'src/permissions/dto/bulk-assign.dto';
+import { BulkAssignRole } from '../dto/bulk-assign.dto';
+import { UsersOthersUsersService } from './role.other.users.service';
+import { translateThis } from 'src/_common/utils/translate-this';
+import { log } from 'console';
 
 @Injectable()
 export class RolesService {
@@ -43,7 +44,7 @@ export class RolesService {
     @InjectRepository(UserToRole)
     private userToRoleRepository: Repository<UserToRole>,
     private usersService: UsersOthersUsersService,
-    private permissionsService: PermissionsService
+    private permissionsService: PermissionsService,
   ) {}
 
   async create(createRoleDto: CreateRoleDto) {
@@ -56,10 +57,10 @@ export class RolesService {
       bulkAssignPermissionToRole.permissions = createRoleDto.permissions;
       bulkAssignPermissionToRole.role_id = savedRole.id;
       await this.permissionsService.bulkAssignPermissionToRole(
-        bulkAssignPermissionToRole
+        bulkAssignPermissionToRole,
       );
 
-      return createSuccessAutoTranslated("تم انشاء الدور بنجاح");
+      return createSuccessAutoTranslated('تم انشاء الدور بنجاح');
     } catch (error) {
       const message = defaultErrorAutoTranslatedString();
       throw new UnprocessableEntityException(message);
@@ -79,7 +80,7 @@ export class RolesService {
         ...role,
         roleToPermission: undefined,
         permissions: role.roleToPermission.map(
-          (roleToPermission) => roleToPermission.permission.id
+          (roleToPermission) => roleToPermission.permission.id,
         ),
       }));
 
@@ -89,9 +90,9 @@ export class RolesService {
         pageOptionsDto,
       });
       return new PageDto(
-        "تم استرجاع الادوار  بنجاح",
+        'تم استرجاع الادوار  بنجاح',
         rolesWithPermissions,
-        pageMetaDto
+        pageMetaDto,
       );
     } catch (error) {
       const message = defaultErrorAutoTranslatedString();
@@ -130,17 +131,17 @@ export class RolesService {
     Object.assign(role, updateRoleDto);
     try {
       await this.roleRepository.save(role);
-      if (id == 1) return updateSuccessAutoTranslated("تم تحديث الدور بنجاح");
+      if (id == 1) return updateSuccessAutoTranslated('تم تحديث الدور بنجاح');
 
       if (updateRoleDto.permissions) {
         const bulkAssignPermissionToRole = new BulkAssignPermission();
         bulkAssignPermissionToRole.permissions = updateRoleDto.permissions;
         bulkAssignPermissionToRole.role_id = role.id;
         await this.permissionsService.bulkAssignPermissionToRole(
-          bulkAssignPermissionToRole
+          bulkAssignPermissionToRole,
         );
       }
-      return updateSuccessAutoTranslated("تم تحديث الدور بنجاح");
+      return updateSuccessAutoTranslated('تم تحديث الدور بنجاح');
     } catch (error) {
       const message = updateErrorAutoTranslatedString();
       throw new UnprocessableEntityException(message);
@@ -154,7 +155,7 @@ export class RolesService {
     }
     try {
       await this.roleRepository.softRemove(role);
-      return deleteSuccessAutoTranslated("Role deleted successfully");
+      return deleteSuccessAutoTranslated('Role deleted successfully');
     } catch (error) {
       throw new UnprocessableEntityException("Can't delete this role");
     }
@@ -169,7 +170,7 @@ export class RolesService {
     try {
       await this.roleRepository.remove(role);
 
-      const message = translateThis("default.delete");
+      const message = translateThis('default.delete');
       return {
         message: message,
         data: role,
@@ -194,7 +195,7 @@ export class RolesService {
     });
 
     if (isExistUserToRole) {
-      const message = translateThis("permission.user_already_has_this_role");
+      const message = translateThis('permission.user_already_has_this_role');
       throw new UnprocessableEntityException(message);
     }
     try {
@@ -203,7 +204,7 @@ export class RolesService {
       roleToUser.user = user;
       await this.userToRoleRepository.save(roleToUser);
 
-      const message = translateThis("default.update");
+      const message = translateThis('default.update');
       return {
         message: message,
       };
@@ -237,24 +238,25 @@ export class RolesService {
       });
       // ---------------------------
       await this.userToRoleRepository.save(userToRole);
-      const message = translateThis("default.update");
+      const message = translateThis('default.update');
 
       return {
         message: message,
       };
     } catch (error) {
+      log(error);
       const message = defaultErrorAutoTranslatedString();
       throw new UnprocessableEntityException(message);
     }
   }
   async disassociateRoleFromUser(
-    disassociateRoleFromUser: DisassociateRoleFromUser
+    disassociateRoleFromUser: DisassociateRoleFromUser,
   ) {
     const { user_id, role_id } = disassociateRoleFromUser;
     const isExistUserToRole = await this.userToRoleRepository.findOne({
       where: { user: Equal(user_id), role: Equal(role_id) },
     });
-    console.log("isExistUserToRole", isExistUserToRole);
+    console.log('isExistUserToRole', isExistUserToRole);
 
     if (!isExistUserToRole) {
       const message = notFoundErrorAutoTranslatedString();
@@ -264,7 +266,7 @@ export class RolesService {
     try {
       await this.userToRoleRepository.remove(isExistUserToRole);
 
-      const message = translateThis("default.update");
+      const message = translateThis('default.update');
       return {
         message: message,
       };
@@ -279,7 +281,7 @@ export class RolesService {
   }
   async findLastRoles(take: number = 5) {
     const last = await this.roleRepository.find({
-      order: { created_at: "DESC" },
+      order: { created_at: 'DESC' },
       take,
     });
     return last;

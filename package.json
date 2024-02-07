@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "seeder:admin": "npm run build && node dist/seeders/run_seeders_of_user_role_permissions.seeder.js"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -31,19 +32,23 @@
     "class-validator": "^0.14.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "mysql": "^2.18.1",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.6.3",
     "nestjs-i18n": "^10.4.0",
+    "node-color-log": "^11.0.1",
     "nodemailer": "^6.9.9",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "typeorm-extension": "^3.4.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
-    "@types/express": "^4.17.13",
+    "@types/express": "^4.17.21",
     "@types/jest": "29.2.4",
+    "@types/multer": "^1.4.11",
     "@types/node": "18.11.18",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",

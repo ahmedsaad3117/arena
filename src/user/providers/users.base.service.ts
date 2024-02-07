@@ -34,6 +34,7 @@ import { PageDto } from 'src/_common/pagination/page.dto';
 import { PageMetaDto } from 'src/_common/pagination/page-meta.dto';
 import { explodeCompleteUrl } from 'src/_common/utils/explodeCompleteUrl.util';
 import { BulkAssignRole } from 'src/roles/dto/bulk-assign.dto';
+import { log } from 'console';
 
 @Injectable()
 export class UsersBaseService {
@@ -43,14 +44,15 @@ export class UsersBaseService {
     private rolesService: RolesService,
   ) {}
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
-    const { phone, email, password, confirm_password } = createUserDto;
-    if (password !== confirm_password) {
-      const message = translateThis('auth.wrong_confirm_password');
-      throw new ConflictException({
-        message: message,
-      });
-    }
     try {
+      log('existingUser', 'existingUser11111111');
+      const { phone, email, password, confirm_password } = createUserDto;
+      if (password !== confirm_password) {
+        const message = translateThis('auth.wrong_confirm_password');
+        throw new ConflictException({
+          message: message,
+        });
+      }
       const existingUser = await this.userRepository.findOne({
         where: [{ email }, { phone }],
       });
@@ -73,13 +75,17 @@ export class UsersBaseService {
         status: UserStatusEnum.ACTIVE,
         ...createUserDto,
       });
+      log('first111111111111', newUser);
       const user = await this.userRepository.save(newUser);
       const bulkAssignRoleToUser = new BulkAssignRole();
-      bulkAssignRoleToUser.roles = createUserDto.roles;
+      bulkAssignRoleToUser.roles = createUserDto.roles || [];
+      log('first22222222222222222');
+
       bulkAssignRoleToUser.user_id = user.id;
       await this.rolesService.bulkAssignRolesToUser(bulkAssignRoleToUser);
       return user;
     } catch (error) {
+      console.log(error, '------------------s');
       const message = defaultErrorAutoTranslatedString();
       throw new UnprocessableEntityException(message);
     }

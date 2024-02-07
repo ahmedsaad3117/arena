@@ -16,7 +16,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.use('/uploads', express.static(join(__dirname, '../', 'uploads')));
   app.use('/assets', express.static(join(__dirname, '../', 'assets')));
-  await app.listen(3000);
+  await app.listen(3008);
   console.log('App running successfully', await app.getUrl());
 }
 bootstrap();
